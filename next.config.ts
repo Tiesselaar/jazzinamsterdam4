@@ -2,7 +2,7 @@ import { Tables } from '@/types/supabase'
 import type { NextConfig } from 'next'
 import { Rewrite } from 'next/dist/lib/load-custom-routes'
 
-const calendarRewrite = (calendar: Tables<'metadata'>): Rewrite => ({
+const calendarRewrite = (calendar: Tables<'view_hosts'>): Rewrite => ({
   source: `/${calendar.slug}/:path*`,
   has: [
     { type: 'host', value: calendar.host },
@@ -19,7 +19,7 @@ const customPages = [
 ]
 
 const pageRewrite = (
-  root: Tables<'metadata'>,
+  root: Tables<'view_hosts'>,
   page: string
   
 ): Rewrite => ({
@@ -34,8 +34,9 @@ const pageRewrite = (
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    const res = await fetch("https://jazzinamsterdam4.vercel.app/api/meta?fields=id,host,slug")
-    const calendars: Tables<'metadata'>[] = await res.json()
+    // const res = await fetch("https://jazzinamsterdam4.vercel.app/api/meta?fields=id,host,slug")
+    // const calendars: Tables<'view_hosts'>[] = await res.json()
+    const calendars: Tables<'view_hosts'>[] = []
     const hosts = Array.from(new Set(calendars.map(c => c.host)))
     const roots = hosts.map(host => calendars.find(c => c.host === host))
 

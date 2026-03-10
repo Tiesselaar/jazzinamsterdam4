@@ -34,7 +34,7 @@ export function log(hook: string | logHook): logHook {
 async function getAllMetadata() {
   const logHook = log('metadata')
   let { data, error } = await supabase
-    .from('metadata')
+    .from('view_hosts')
     .select()
     .order('order')
   log(logHook)

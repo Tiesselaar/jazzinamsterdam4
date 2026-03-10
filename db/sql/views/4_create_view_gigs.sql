@@ -9,4 +9,4 @@ select
     else display_date < current_display_date
   end as archive
 from
-  view_gigs_with_display_date
+  view_gigs_with_display_date;

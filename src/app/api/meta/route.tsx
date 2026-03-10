@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   
 
   return createSupabaseClient()
-    .from('metadata')
+    .from('view_hosts')
     .select(fields)
     .order('order')
     .then(({ error, data }) => error ? { error: error.message } : data)

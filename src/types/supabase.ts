@@ -106,30 +106,53 @@ export type Database = {
           },
         ]
       }
+      hosts: {
+        Row: {
+          host: string
+          region: string
+        }
+        Insert: {
+          host: string
+          region: string
+        }
+        Update: {
+          host?: string
+          region?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hosts_region_fkey"
+            columns: ["region"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["region"]
+          },
+        ]
+      }
       metadata: {
         Row: {
           description: string
-          host: string
           id: string
           order: number
+          region: string
           shortTitle: string
           slug: string
           title: string
         }
         Insert: {
           description: string
-          host?: string
           id: string
           order?: number
+          region?: string
           shortTitle: string
           slug: string
           title: string
         }
         Update: {
           description?: string
-          host?: string
           id?: string
           order?: number
+          region?: string
           shortTitle?: string
           slug?: string
           title?: string
@@ -316,6 +339,41 @@ export type Database = {
             foreignKeyName: "gigs_calendar_fkey"
             columns: ["calendar"]
             isOneToOne: false
+            referencedRelation: "view_timed_calendars"
+            referencedColumns: ["calendar"]
+          },
+        ]
+      }
+      view_hosts: {
+        Row: {
+          description: string 
+          host: string 
+          id: string 
+          order: number 
+          region: string 
+          shortTitle: string 
+          slug: string 
+          title: string 
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hosts_region_fkey"
+            columns: ["region"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["region"]
+          },
+          {
+            foreignKeyName: "metadata_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "calendars"
+            referencedColumns: ["calendar"]
+          },
+          {
+            foreignKeyName: "metadata_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
             referencedRelation: "view_timed_calendars"
             referencedColumns: ["calendar"]
           },
