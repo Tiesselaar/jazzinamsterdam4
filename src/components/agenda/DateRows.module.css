@@ -1,0 +1,12 @@
+.default {
+  background-color: #dddddd;
+}
+
+.dark {
+  color: white;
+  background-color: grey;
+}
+
+.light {
+  background-color: #f9f9f9;
+}

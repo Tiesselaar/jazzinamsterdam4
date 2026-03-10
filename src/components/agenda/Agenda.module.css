@@ -1,0 +1,49 @@
+/* MAIN THEME */
+
+.default {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.default caption {
+  text-align: left;
+}
+
+.default td,
+.default th,
+.default caption {
+  padding: 6px;
+  padding-right: 0;
+}
+
+.default tr {
+  border: solid black;
+  border-width: 1px 0 0 0;
+}
+
+/* PROMO PICKER STYLING */
+
+.dashed tr {
+  border: 1px dashed black !important;
+}
+
+/* SUMBISSIONS */
+
+.submit {
+  max-width: 600px;
+  width: 100%;
+  table-layout: fixed;
+  margin: 16px 8px;
+  border-collapse: collapse;
+}
+
+.submit caption {
+  text-align: left;
+}
+
+/* PROMO STYLING */
+
+table.promo {
+  border-spacing: 8px;
+}

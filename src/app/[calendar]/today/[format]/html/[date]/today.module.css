@@ -1,0 +1,38 @@
+.container {
+    border: 1px solid white;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.post {
+    width: 540px;
+    min-height: 675px;
+    padding: 10px;
+}
+
+.story {
+    width: 540px;
+    min-height: 960px;
+    padding: 80px 15px;
+}
+
+.table {
+    margin: 8px;
+}
+
+.table td {
+    vertical-align: top;
+}
+
+.timeTag::after {
+    content: "";
+    margin: 2px;
+}
+
+.date {
+    font-size: 1.3em;
+    font-weight: lighter;
+    font-style: italic;
+}

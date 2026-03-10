@@ -1,0 +1,53 @@
+.background {
+    background-color: #eeeeee;
+}
+
+.page {
+    background-color: white;
+    overflow: auto;
+    font-weight: 300;
+}
+
+.page h1 {
+    font-size: 1.8em;
+}
+
+.venue {
+    font-weight: 500;
+}
+
+.post {
+    width: 540px;
+    min-height: 675px;
+    padding: 30px 30px;
+    font-size: 17px;
+}
+
+.story {
+    width: 540px;
+    min-height: 960px;
+    padding: 155px 30px;
+    font-size: 17px;
+}
+
+.table {
+    margin: 8px;
+}
+
+.story .table td.gigHead {
+    padding-top: 1.5em;
+}
+
+.post .table td.gigHead {
+    padding-top: 0.5em;
+}
+
+.timeTag::after {
+    content: "";
+    margin: 2px;
+}
+
+.date {
+    font-weight: lighter;
+    font-style: italic;
+}

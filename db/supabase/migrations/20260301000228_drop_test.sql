@@ -1,0 +1,1 @@
+drop view test_view

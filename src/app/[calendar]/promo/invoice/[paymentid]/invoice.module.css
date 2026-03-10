@@ -1,0 +1,30 @@
+.invoice {
+    border: 1px dashed black;
+    max-width: 750px;
+    padding: 50px 0 100px 0;
+}
+
+.address {
+    text-align: right;
+}
+
+.products {
+    width: 100%;
+    padding: 20px 0;
+    border-spacing: 30px 8px;
+}
+
+.products thead {
+    font-weight: bold;
+}
+
+.printbutton {
+    background: none;
+	color: inherit;
+	border: 1px solid black;
+	padding: 8px;
+    margin: 8px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}

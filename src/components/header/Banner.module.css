@@ -1,0 +1,9 @@
+.banner {
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.5em;
+    padding: 8px;
+    border-width: 0 0 1px 0;
+    border-style: dashed;
+    display: block;
+    /* text-decoration: underline !important; */
+}

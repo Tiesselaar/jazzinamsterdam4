@@ -1,0 +1,12 @@
+.modbutton {
+  position: fixed;
+  z-index: 2;
+
+  top: 0px;
+  right: 0;
+  padding: 10px;
+
+  background-color: white;
+  border: solid black;
+  border-width: 0 0 1px 1px;
+}

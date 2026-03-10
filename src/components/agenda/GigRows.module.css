@@ -1,0 +1,68 @@
+/* MAIN TABLE */
+
+.default .time {
+  width: 42px;
+}
+
+.defalut .venue {
+  padding-left: 3px;
+}
+
+.default .price {
+  width: 42px;
+  padding-left: 4px;
+  padding-right: 2px;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* PROMOPICKER */
+
+.select {
+  color: blue !important;
+  text-decoration: underline !important;
+}
+
+/* SUMBISSION ROWS */
+
+.submit .title,
+.submit .venue {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submit .day {
+  width: 30px;
+}
+
+.submit .date {
+  width: 50px;
+}
+
+.submit .pending {
+  color: #555555;
+}
+
+.submit .selected {
+  font-weight: bold;
+}
+
+
+/* PROMO CELL */
+
+.promo td {
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.5em;
+  border: 1px dashed black;
+  padding: 1em 1.5em;
+}

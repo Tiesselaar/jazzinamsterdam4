@@ -1,0 +1,39 @@
+-- sumbit.sql
+DROP POLICY "submissions" on public.gigs;
+CREATE POLICY "submissions"
+ON public.gigs
+FOR ALL
+USING (
+  (
+    gigs.date >= (
+      current_timestamp AT TIME ZONE (
+        select
+          regions.time_zone
+        from
+          (
+            calendars
+            join regions using (region)
+          )
+        where
+          gigs.calendar = calendars.calendar
+      )
+    )::date
+  )
+  and user_id in (select auth.uid())
+)
+WITH CHECK (
+  gigs.date >= ((
+    current_timestamp AT TIME ZONE (
+      select
+        regions.time_zone
+      from
+        (
+          calendars
+          join regions using (region)
+        )
+      where
+        gigs.calendar = calendars.calendar
+    )
+  )::date
+))
+

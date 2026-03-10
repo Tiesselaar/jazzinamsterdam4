@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/today",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/today/cron",
+      "schedule": "0 7 * * *"
+    }
+  ]
+}

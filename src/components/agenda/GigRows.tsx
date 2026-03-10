@@ -1,0 +1,134 @@
+import { Tables } from "@/types/supabase"
+import { dateString, dateTimeString, mapsLink } from "./tools"
+
+import rowStyles from './GigRows.module.css'
+import Link from "next/link"
+import { editLink, modLink } from "@/lib/paths"
+import { useParams } from "next/navigation"
+
+export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  const downloadICS = () => window.location.href = `/ics/${gig.id}`
+  return (
+    <tr className={rowStyles.default} itemScope itemType="https://schema.org/Event">
+      <td className={rowStyles.time}>
+        <button className={rowStyles.linklike} onClick={downloadICS}>
+          <time itemProp='startDate' dateTime={dateTimeString(gig)}>
+            {gig.time}
+          </time>
+        </button>
+      </td>
+      <td className={rowStyles.title}>
+        <a itemProp='url name' href={gig.site}>
+            {gig.title}
+        </a>
+      </td>
+      <td className={rowStyles.venue} itemProp="location" itemScope itemType="https://schema.org/Place">
+        <a href={mapsLink(gig)} itemProp='name'>
+            {gig.venue}
+        </a>
+      </td>
+      <td className={rowStyles.price}>
+        {gig.price}
+      </td>
+    </tr>
+  )
+}
+
+export function ArchiveRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  return (
+    <tr className={rowStyles.default}>
+      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.title}>{gig.title}</td>
+      <td className={rowStyles.venue}>{gig.venue}</td>
+      <td className={rowStyles.price}>{gig.price}</td>
+    </tr >
+  )
+}
+
+export function ModRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  return (
+    <tr className={rowStyles.default}>
+      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.title}>
+        <Link href={editLink(gig.calendar, gig.source, gig.id)}>
+          {gig.title}
+        </Link>
+      </td>
+      <td className={rowStyles.venue}>
+        <Link href={modLink(gig.calendar, gig.source)}>
+          {gig.venue}
+        </Link>
+      </td>
+      <td className={rowStyles.price}>{gig.price}</td>
+    </tr >
+  )
+}
+
+export function PromoPickerRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  const promoLink = `/calendar/${gig.calendar}/promo/${gig.id}`
+  return (
+    <tr className={rowStyles.default}>
+      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.title}>{gig.title}</td>
+      <td className={rowStyles.venue}>{gig.venue}</td>
+      <td className={rowStyles.price}>
+        <Link href={promoLink}>
+          select
+        </Link>
+      </td>
+    </tr >
+  )
+}
+
+export function PromoRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  const currentYear = (new Date).getFullYear().toString()
+  // const localDate = (new Date(gig.date)).toLocaleDateString("en-GB", { dateStyle: 'full' })
+  // const formattedDate = localDate.replace(',', '').replace(currentYear, '').trim()
+
+  return (
+    <tr className={rowStyles.promo}>
+      <td>
+        <a href={gig.site}>
+          <strong>{gig.venue}</strong>{" - "}{gig.title}
+          <br />
+          {dateString(gig.date)}, {gig.time?.slice(0, 5)}
+        </a>
+      </td>
+    </tr >
+  )
+}
+
+export function SubmitRow({ gig }: { gig: Tables<'view_gigs'> }) {
+  const id = Number(useParams().id)
+
+  const formattedDate = gig.date.split('-')[2] + '/' + gig.date.split('-')[1]
+  const formattedDay = new Date(gig.date).toUTCString().slice(0, 2)
+  const link = editLink(gig.calendar, gig.source, gig.id)
+
+  const selected = gig.id === id
+  const pending = !gig.reviewed
+
+  const linkStyle = [
+    selected ? rowStyles.selected : undefined,
+    pending ? rowStyles.pending : undefined,
+  ].join(' ')
+
+  return (
+    <tr className={rowStyles.submit}>
+      <td className={rowStyles.day}>{formattedDay}</td>
+      <td className={rowStyles.date}>{formattedDate}</td>
+      <td className={rowStyles.title}>
+        {!gig.reviewed && "(pending) "}
+        <Link
+          href={link}
+          scroll={false}
+          replace
+          className={linkStyle}
+        >
+          {gig.title}
+        </Link>
+      </td>
+      <td className={rowStyles.venue}>{gig.venue}</td>
+    </tr>
+  )
+}

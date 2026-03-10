@@ -1,0 +1,15 @@
+button.loadMore {
+  width: 100%;
+  margin-top: 40;
+  padding: 40;
+
+  background: none;
+  color: black;
+
+  border: solid black;
+  border-width: 1px 0;
+
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+}

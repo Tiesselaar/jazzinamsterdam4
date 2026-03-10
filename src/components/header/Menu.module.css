@@ -1,0 +1,11 @@
+.calendars {
+    line-height: 1.5em;
+    font-size: 1.1em;
+    display: flex;
+    gap: 0 10px;
+    flex-wrap: wrap;
+}
+
+.topmenu {
+  font-style: italic;
+}
