@@ -34,9 +34,8 @@ const pageRewrite = (
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    // const res = await fetch("https://jazzinamsterdam4.vercel.app/api/meta?fields=id,host,slug")
-    // const calendars: Tables<'view_hosts'>[] = await res.json()
-    const calendars: Tables<'view_hosts'>[] = []
+    const res = await fetch("https://jazzinamsterdam4.vercel.app/api/meta?fields=id,host,slug")
+    const calendars: Tables<'view_hosts'>[] = await res.json()
     const hosts = Array.from(new Set(calendars.map(c => c.host)))
     const roots = hosts.map(host => calendars.find(c => c.host === host))
 
