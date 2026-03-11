@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import styles from './Menu.module.css'
-import { canonicalHost, metaDataList } from "@/lib/supabase"
+import { canonical, metaDataList } from "@/lib/supabase"
 import { calendarRoot, editLink } from "@/lib/paths"
 
 export default function Menu({ host, calendar }: { host: string, calendar: string }) {
@@ -11,7 +11,7 @@ export default function Menu({ host, calendar }: { host: string, calendar: strin
   const page = usePathname().split(('/'))[1]
   const subpage = usePathname().split(('/'))[2]
 
-  const internalLinks = metaDataList.filter(cal => cal.canonical === canonicalHost.get(host))
+  const internalLinks = metaDataList.filter(cal => cal.canonical === canonical.get(host))
 
   return <>
     {(internalLinks.length > 1) && <nav className={styles.calendars}>

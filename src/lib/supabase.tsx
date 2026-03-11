@@ -55,7 +55,7 @@ async function hostLookup() {
   return data || []
 }
 
-export const canonicalHost = new Map((await hostLookup()).map(m => [m.host, m.canonical]))
+export const canonical = new Map((await hostLookup()).map(m => [m.host, m.canonical]))
 
 
 // === GET AGENDA DATA ===

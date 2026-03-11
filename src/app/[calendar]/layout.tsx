@@ -5,8 +5,6 @@ import type { Metadata } from 'next'
 
 import '@/app/globals.css'
 
-import { metaData } from '@/lib/supabase';
-
 import Menu from '@/components/header/Menu'
 import ModButton from '@/components/header/ModButton'
 import metaPages from '@/components/header/metadata'
@@ -14,6 +12,7 @@ import TopMenu from '@/components/header/TopMenu';
 import Header from '@/components/header/Header';
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
+import { canonical, metaData } from '@/lib/supabase'
 
 export async function generateMetadata(
   { params }: { params: Promise<{ calendar: string }> }
@@ -37,7 +36,7 @@ export default async function RootLayout({
   const fullhost = h.get("x-forwarded-host") ?? h.get("host")
   const host = new URL(`http://${fullhost}`).hostname
 
-  // if (metaData.get(calendar)?.host !== host) notFound()
+  if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
 
   return (
     <>
