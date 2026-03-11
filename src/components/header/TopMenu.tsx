@@ -11,7 +11,7 @@ export default function TopMenu() {
             <a href='https://play.google.com/store/apps/details?id=amsterdam.jazzin'>android</a>
             <a href='https://apps.apple.com/nl/app/jazz-in-amsterdam/id6747498509'>iOS</a>
             <Link href={'/about'}>about</Link>
-            <strong><a href={'https://www.mokumlivemusic.com/'}>book a band</a></strong>
+            <a href={'https://www.mokumlivemusic.com/'}>book a band</a>
         </nav>
     </>
 }
