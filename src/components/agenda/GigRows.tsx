@@ -18,13 +18,17 @@ export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
         </button>
       </td>
       <td className={rowStyles.title}>
-        <a itemProp='url name' href={gig.site}>
+        <a itemProp='url' href={gig.site}>
+          <span itemProp='name'>
             {gig.title}
+          </span>
         </a>
       </td>
       <td className={rowStyles.venue} itemProp="location" itemScope itemType="https://schema.org/Place">
-        <a href={mapsLink(gig)} itemProp='name'>
+        <a href={mapsLink(gig)}>
+          <span itemProp='name'>
             {gig.venue}
+          </span>
         </a>
       </td>
       <td className={rowStyles.price}>
