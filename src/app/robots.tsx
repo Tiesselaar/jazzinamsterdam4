@@ -4,13 +4,13 @@ import type { MetadataRoute } from "next"
 import { headers } from "next/headers"
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const calendars = metaDataList
+  const hostname = canonical.get(getHostName(await headers()))
+  const calendars = metaDataList.filter(m => m.canonical == hostname)
 
-  const mainPaths = calendars.map(g => `/${g.slug}`)
+  const mainPaths = calendars.filter(c => c.order != 1).map(g => `/${g.slug}`)
   const promoPaths = calendars.map(g => `/${g.slug}/promo/*`)
   const legacyPromoPaths = calendars.map(g => `/cal/${g.calendar}/promo/*`)
 
-  const hostname = canonical.get(getHostName(await headers()))
 
   return {
     rules: [
