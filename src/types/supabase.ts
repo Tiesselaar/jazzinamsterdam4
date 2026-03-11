@@ -108,66 +108,58 @@ export type Database = {
       }
       hosts: {
         Row: {
+          canonical: string
           host: string
-          region: string
         }
         Insert: {
+          canonical: string
           host: string
-          region: string
         }
         Update: {
+          canonical?: string
           host?: string
-          region?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "hosts_region_fkey"
-            columns: ["region"]
-            isOneToOne: false
-            referencedRelation: "regions"
-            referencedColumns: ["region"]
-          },
-        ]
+        Relationships: []
       }
       metadata: {
         Row: {
+          calendar: string
+          canonical: string
           description: string
-          id: string
           order: number
-          region: string
           shortTitle: string
           slug: string
           title: string
         }
         Insert: {
+          calendar: string
+          canonical?: string
           description: string
-          id: string
           order?: number
-          region?: string
           shortTitle: string
           slug: string
           title: string
         }
         Update: {
+          calendar?: string
+          canonical?: string
           description?: string
-          id?: string
           order?: number
-          region?: string
           shortTitle?: string
           slug?: string
           title?: string
         }
         Relationships: [
           {
-            foreignKeyName: "metadata_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "metadata_calendar_fkey"
+            columns: ["calendar"]
             isOneToOne: true
             referencedRelation: "calendars"
             referencedColumns: ["calendar"]
           },
           {
-            foreignKeyName: "metadata_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "metadata_calendar_fkey"
+            columns: ["calendar"]
             isOneToOne: true
             referencedRelation: "view_timed_calendars"
             referencedColumns: ["calendar"]
@@ -203,6 +195,30 @@ export type Database = {
       }
     }
     Views: {
+      redirects: {
+        Row: {
+          calendar: string 
+          host: string 
+          order: number 
+          slug: string 
+        }
+        Relationships: [
+          {
+            foreignKeyName: "metadata_calendar_fkey"
+            columns: ["calendar"]
+            isOneToOne: true
+            referencedRelation: "calendars"
+            referencedColumns: ["calendar"]
+          },
+          {
+            foreignKeyName: "metadata_calendar_fkey"
+            columns: ["calendar"]
+            isOneToOne: true
+            referencedRelation: "view_timed_calendars"
+            referencedColumns: ["calendar"]
+          },
+        ]
+      }
       view_gigs: {
         Row: {
           address: string 
@@ -339,41 +355,6 @@ export type Database = {
             foreignKeyName: "gigs_calendar_fkey"
             columns: ["calendar"]
             isOneToOne: false
-            referencedRelation: "view_timed_calendars"
-            referencedColumns: ["calendar"]
-          },
-        ]
-      }
-      view_hosts: {
-        Row: {
-          description: string 
-          host: string 
-          id: string 
-          order: number 
-          region: string 
-          shortTitle: string 
-          slug: string 
-          title: string 
-        }
-        Relationships: [
-          {
-            foreignKeyName: "hosts_region_fkey"
-            columns: ["region"]
-            isOneToOne: false
-            referencedRelation: "regions"
-            referencedColumns: ["region"]
-          },
-          {
-            foreignKeyName: "metadata_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "calendars"
-            referencedColumns: ["calendar"]
-          },
-          {
-            foreignKeyName: "metadata_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
             referencedRelation: "view_timed_calendars"
             referencedColumns: ["calendar"]
           },

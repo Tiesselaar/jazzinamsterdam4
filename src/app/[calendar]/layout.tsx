@@ -37,7 +37,7 @@ export default async function RootLayout({
   const fullhost = h.get("x-forwarded-host") ?? h.get("host")
   const host = new URL(`http://${fullhost}`).hostname
 
-  if (metaData.get(calendar)?.host !== host) notFound()
+  // if (metaData.get(calendar)?.host !== host) notFound()
 
   return (
     <>

@@ -34,7 +34,7 @@ export function log(hook: string | logHook): logHook {
 async function getAllMetadata() {
   const logHook = log('metadata')
   let { data, error } = await supabase
-    .from('view_hosts')
+    .from('metadata')
     .select()
     .order('order')
   log(logHook)
@@ -43,7 +43,20 @@ async function getAllMetadata() {
 }
 
 export const metaDataList = await getAllMetadata()
-export const metaData = new Map(metaDataList.map(m => [m.id, m]))
+export const metaData = new Map(metaDataList.map(m => [m.calendar, m]))
+
+async function hostLookup() {
+  const logHook = log('hosts')
+  let { data, error } = await supabase
+    .from('hosts')
+    .select()
+  log(logHook)
+  if (error) throw error
+  return data || []
+}
+
+export const canonicalHost = new Map((await hostLookup()).map(m => [m.host, m.canonical]))
+
 
 // === GET AGENDA DATA ===
 

@@ -6,7 +6,7 @@ export default async function metaPages(calendar: string) {
   const path = meta.order == 1 ? '/' : meta.slug
 
   return {
-    metadataBase: new URL(`https://${meta.host}`),
+    metadataBase: new URL(`https://${meta.canonical}`),
     title: meta.title,
     alternates: {
       canonical: path

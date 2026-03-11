@@ -1,14 +1,17 @@
-import { Tables } from '@/types/supabase'
 import type { NextConfig } from 'next'
 import { Rewrite } from 'next/dist/lib/load-custom-routes'
 
-const calendarRewrite = (calendar: Tables<'view_hosts'>): Rewrite => ({
-  source: `/${calendar.slug}/:path*`,
-  has: [
-    { type: 'host', value: calendar.host },
-    // { type: 'host', value: 'localhost' }
-  ],
-  destination: `/${calendar.id}/:path*`,
+type RewriteData = {
+  host: string,
+  slug: string,
+  calendar: string,
+  order: number
+}
+
+const calendarRewrite = (rewrite: RewriteData): Rewrite => ({
+  source: `/${rewrite.slug}/:path*`,
+  has: [{ type: 'host', value: rewrite.host }],
+  destination: `/${rewrite.calendar}/:path*`,
 })
 
 const customPages = [
@@ -19,33 +22,40 @@ const customPages = [
 ]
 
 const pageRewrite = (
-  root: Tables<'view_hosts'>,
+  root: RewriteData,
   page: string
-  
+
 ): Rewrite => ({
   source: `/${page}`,
-  has: [
-    { type: 'host', value: root.host },
-    // { type: 'host', value: 'localhost' }
-  ],
-  destination: `/${root.id}/${page}`,
+  has: [{ type: 'host', value: root.host },],
+  destination: `/${root.calendar}/${page}`,
 })
-
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    const res = await fetch("https://jazzinamsterdam4.vercel.app/api/meta?fields=id,host,slug")
-    const calendars: Tables<'view_hosts'>[] = await res.json()
-    const hosts = Array.from(new Set(calendars.map(c => c.host)))
-    const roots = hosts.map(host => calendars.find(c => c.host === host))
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/redirects?select=*`,
+      {
+        method: "GET",
+        headers: {
+          apikey: process.env.NEXT_PUBLIC_SUPABASE_KEY!,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const calendars: RewriteData[] = await res.json()
+    const roots = calendars.filter(c => c.order == 1)
 
     const calendarRewrites: Rewrite[] = calendars.map(calendarRewrite)
     const rootRewrites = roots.flatMap(r => customPages.map(p => pageRewrite(r!, p)))
 
+    // console.log(JSON.stringify(calendarRewrites, (key, value) => (value), 3))
+
     return [
       ...calendarRewrites,
       ...rootRewrites,
-      
       {
         source: '/:calendar/submit',
         destination: '/:calendar/submit/submit'
