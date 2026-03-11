@@ -10,7 +10,7 @@ export default async function Home(props: {
     calendar: calendar,
     archive: false
   }
-  const agendaData = await getAgenda({query})
+  // const agendaData = await getAgenda({query})
 
-  return <MainAgenda agendaData={agendaData} />
+  // return <MainAgenda agendaData={agendaData} />
 }
