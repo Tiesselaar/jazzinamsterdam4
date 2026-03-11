@@ -44,7 +44,7 @@ export default async function RootLayout({
           <TopMenu />
           <Header calendar={calendar} />
           <Menu host={host} calendar={calendar} />
-          {children}
+          {/* {children} */}
           {/* <Analytics /> */}
           {/* <SpeedInsights /> */}
         </body>
