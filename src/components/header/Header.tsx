@@ -1,10 +1,10 @@
 "use server"
 
-import jinaLogo from '@/../public/jina.png'
+// import jinaLogo from '@/../public/jina.png'
 import { venueLink } from '@/lib/paths'
 import { metaData } from '@/lib/supabase'
 
-import Image from "next/image"
+// import Image from "next/image"
 import Link from "next/link"
 
 export default async function Header(
@@ -12,7 +12,7 @@ export default async function Header(
 ) {
     const meta = metaData.get(calendar)
     return <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-        <Image src={jinaLogo} height={28} width={28} alt='logo' priority/>
+        {/* <Image src={jinaLogo} height={28} width={28} alt='logo' priority/> */}
         <Link href={venueLink(calendar)} >
             {
                 meta?.title.replace("Classical music in Amsterdam", "Classical in Amsterdam") ||
