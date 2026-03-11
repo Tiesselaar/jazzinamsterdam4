@@ -40,8 +40,8 @@ export default async function RootLayout({
     <>
       <html lang="en">
         <body>
-          <ModButton />
-          <TopMenu />
+          {/* <ModButton /> */}
+          {/* <TopMenu /> */}
           {/* <Header calendar={calendar} /> */}
           <Menu host={host} calendar={calendar} />
           {/* {children} */}
