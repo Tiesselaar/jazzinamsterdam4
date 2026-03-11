@@ -1,5 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { AgendaQuery, getAgenda, getAgendaNoCache, RequestOptions } from "@/lib/supabase"
+import { Tables } from '@/types/supabase'
 
 const instruction = {
   usage: "https://jazzin.amsterdam/api?calendar=jazzAmsterdam&page=1&archive=false",
@@ -10,6 +11,21 @@ const instruction = {
   message: "Let me know if you are actually using this!"
 }
 
+
+
+const restrict = (gig: Tables<'view_gigs'>) => ({
+  calendar: gig.calendar,
+  title: gig.title,
+  date: gig.date,
+  time: gig.time,
+  venue: gig.venue,
+  site: gig.site,
+  price: gig.price,
+  address: gig.address,
+  id: gig.id,
+  source: gig.source,
+  reviewed: gig.reviewed,
+})
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -29,9 +45,12 @@ export async function GET(request: NextRequest) {
   }
 
   const options: Partial<RequestOptions> = {
-    ...(offset && {offset}),
-    ...(limit && {limit})
+    ...(offset && { offset }),
+    ...(limit && { limit })
   }
-  const data = await getAgendaNoCache({ query: {}, options })
-  return Response.json(data.data)
+
+
+
+  const data = await getAgendaNoCache({ query, options })
+  return Response.json(data.data.map(restrict))
 }
