@@ -30,27 +30,33 @@ const restrict = (gig: Tables<'view_gigs'>) => ({
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
 
-  const calendar = searchParams.get('calendar') || undefined
+  const calendarString = searchParams.get('calendar') || undefined
+  if (calendarString == undefined)
+    return Response.json(instruction)
+
   const source = searchParams.get('source') || undefined
   const scope = searchParams.get('scope') || undefined
   const archive = scope === 'all' ? undefined : scope === 'archive'
   const offset = Number(searchParams.get('offset')) || 0
   const limit = Number(searchParams.get('limit')) || undefined
 
-
-  const query: AgendaQuery = {
-    ...(calendar !== undefined && { calendar }),
-    ...(source !== undefined && { source }),
-    ...(archive !== undefined && { archive }),
-  }
+  const calendars = calendarString.split(',').map(c => c.trim())
 
   const options: Partial<RequestOptions> = {
     ...(offset && { offset }),
     ...(limit && { limit })
   }
 
+  const sbqueries = calendars.map(calendar => {
+    const query: AgendaQuery = {
+      calendar,
+      ...(source !== undefined && { source }),
+      ...(archive !== undefined && { archive }),
+    }
+    return getAgendaNoCache({ query, options })
+  })
 
+  const results = (await Promise.all(sbqueries)).flatMap(ad => ad.data)
 
-  const data = await getAgendaNoCache({ query, options })
-  return Response.json(data.data.map(restrict))
+  return Response.json(results.map(restrict))
 }
