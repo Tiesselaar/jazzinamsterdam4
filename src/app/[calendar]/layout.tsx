@@ -11,9 +11,9 @@ import Menu from '@/components/header/Menu'
 // import TopMenu from '@/components/header/TopMenu';
 // import Header from '@/components/header/Header';
 // import { notFound } from 'next/navigation';
-// import { headers } from 'next/headers';
+import { headers } from 'next/headers';
 // import { canonical, metaData } from '@/lib/supabase'
-// import { getHostName } from '@/lib/paths'
+import { getHostName } from '@/lib/paths'
 
 // export async function generateMetadata(
 //   { params }: { params: Promise<{ calendar: string }> }
@@ -31,8 +31,8 @@ export default async function RootLayout({
   params: Promise<{ calendar: string }>
 }) {
 
-  // const calendar = (await params).calendar  
-  // const host = getHostName(await headers())
+  const calendar = (await params).calendar  
+  const host = getHostName(await headers())
 
   // if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
 
