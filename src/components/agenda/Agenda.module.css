@@ -13,8 +13,7 @@
 .default td,
 .default th,
 .default caption {
-  padding: 6px;
-  padding-right: 0;
+  padding: 6px 0 6px 4px;
 }
 
 .default tr {
@@ -25,7 +24,8 @@
 /* PROMO PICKER STYLING */
 
 .dashed tr {
-  border: 1px dashed black !important;
+  border: dashed black !important;
+  border-width: 1px 0 0 0 !important;
 }
 
 /* SUMBISSIONS */

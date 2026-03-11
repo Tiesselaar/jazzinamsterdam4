@@ -1,17 +1,17 @@
 /* MAIN TABLE */
 
 .default .time {
-  width: 42px;
+  white-space: nowrap;
+  width: 1%;
 }
 
-.defalut .venue {
-  padding-left: 3px;
-}
+/* .default .venue {
+} */
 
 .default .price {
-  width: 42px;
-  padding-left: 4px;
-  padding-right: 2px;
+  max-width: 10ch;
+  min-width: 5ch;
+  word-break: break-all;
 }
 
 .linklike {

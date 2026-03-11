@@ -4,11 +4,13 @@ import Checkout from "./checkout"
 
 import { MAX_DAYS } from "../BASEPRICE";
 import { PromoAgenda } from "@/components/agenda/Variants";
+import { notFound } from "next/navigation";
 
 
 export default async function Page(props: {
   params: Promise<{ calendar: string, id: string }>
 }) {
+
   const params = await props.params
   const calendar = params.calendar
   const id = +params.id
@@ -18,8 +20,8 @@ export default async function Page(props: {
   const agendaMetaData = metaData.get(calendar)
   const agendaData = await getAgenda({query: {id}})
   const [gig] = agendaData.data
-
-  if (!gig) return <p>Gig not found</p>
+  
+  if (!gig) notFound()
 
   const { data: calendarMetaData } = await supabase.from('metadata').select().match({ calendar }).single()
 

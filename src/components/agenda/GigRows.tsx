@@ -3,8 +3,23 @@ import { dateString, dateTimeString, mapsLink } from "./tools"
 
 import rowStyles from './GigRows.module.css'
 import Link from "next/link"
-import { editLink, modLink } from "@/lib/paths"
+import { editLink, modLink, promoLink } from "@/lib/paths"
 import { useParams } from "next/navigation"
+
+const Time = ({ gig }: { gig: Tables<'view_gigs'> }) =>
+  <time itemProp='startDate' dateTime={dateTimeString(gig)}>
+    {gig.time.slice(0, 5)}
+  </time>
+
+const Price = ({ gig }: { gig: Tables<'view_gigs'> }) =>
+  <>
+    {
+      gig.price
+        .replaceAll('€', '')
+        .replaceAll('EUR', '')
+        .trim()
+    }
+  </>
 
 export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
   const downloadICS = () => window.location.href = `/ics/${gig.id}`
@@ -12,9 +27,7 @@ export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
     <tr className={rowStyles.default} itemScope itemType="https://schema.org/Event">
       <td className={rowStyles.time}>
         <button className={rowStyles.linklike} onClick={downloadICS}>
-          <time itemProp='startDate' dateTime={dateTimeString(gig)}>
-            {gig.time}
-          </time>
+          <Time gig={gig} />
         </button>
       </td>
       <td className={rowStyles.title}>
@@ -32,7 +45,7 @@ export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
         </a>
       </td>
       <td className={rowStyles.price}>
-        {gig.price}
+        <Price gig={gig} />
       </td>
     </tr>
   )
@@ -41,10 +54,14 @@ export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
 export function ArchiveRow({ gig }: { gig: Tables<'view_gigs'> }) {
   return (
     <tr className={rowStyles.default}>
-      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.time}>
+        <Time gig={gig} />
+      </td>
       <td className={rowStyles.title}>{gig.title}</td>
       <td className={rowStyles.venue}>{gig.venue}</td>
-      <td className={rowStyles.price}>{gig.price}</td>
+      <td className={rowStyles.price}>
+        <Price gig={gig} />
+      </td>
     </tr >
   )
 }
@@ -52,7 +69,9 @@ export function ArchiveRow({ gig }: { gig: Tables<'view_gigs'> }) {
 export function ModRow({ gig }: { gig: Tables<'view_gigs'> }) {
   return (
     <tr className={rowStyles.default}>
-      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.time}>
+        <Time gig={gig} />
+      </td>
       <td className={rowStyles.title}>
         <Link href={editLink(gig.calendar, gig.source, gig.id)}>
           {gig.title}
@@ -63,20 +82,23 @@ export function ModRow({ gig }: { gig: Tables<'view_gigs'> }) {
           {gig.venue}
         </Link>
       </td>
-      <td className={rowStyles.price}>{gig.price}</td>
+      <td className={rowStyles.price}>
+        <Price gig={gig} />
+      </td>
     </tr >
   )
 }
 
 export function PromoPickerRow({ gig }: { gig: Tables<'view_gigs'> }) {
-  const promoLink = `/calendar/${gig.calendar}/promo/${gig.id}`
   return (
     <tr className={rowStyles.default}>
-      <td className={rowStyles.time}>{gig.time}</td>
+      <td className={rowStyles.time}>
+        <Time gig={gig} />
+      </td>
       <td className={rowStyles.title}>{gig.title}</td>
       <td className={rowStyles.venue}>{gig.venue}</td>
       <td className={rowStyles.price}>
-        <Link href={promoLink}>
+        <Link href={promoLink(gig.calendar, gig.id)}>
           select
         </Link>
       </td>
@@ -95,7 +117,7 @@ export function PromoRow({ gig }: { gig: Tables<'view_gigs'> }) {
         <a href={gig.site}>
           <strong>{gig.venue}</strong>{" - "}{gig.title}
           <br />
-          {dateString(gig.date)}, {gig.time?.slice(0, 5)}
+          {dateString(gig.date)}, <Time gig={gig} />
         </a>
       </td>
     </tr >

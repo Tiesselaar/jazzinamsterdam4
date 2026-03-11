@@ -18,7 +18,7 @@ export function editLink(calendar: string, source?: string, id?: number) {
 
 export function modLink(calendar: string, source?: string) {
   const root = calendarRoot(calendar)
-  return `${root}/mod/${source ?? ''}`
+  return `${root}/mod${source ? '/' + source : ''}`
 }
 
 export function venueLink(calendar: string, source?: string) {
@@ -27,6 +27,11 @@ export function venueLink(calendar: string, source?: string) {
     return `${root}/venue/${source}`
   else
     return `${root}`
+}
+
+export function promoLink(calendar: string, id?: number) {
+  const root = calendarRoot(calendar)
+  return `${root}/promo${id ? '/' + id : ''}`
 }
 
 export function getHostName(headers: ReadonlyHeaders) {
