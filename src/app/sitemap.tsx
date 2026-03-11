@@ -1,9 +1,14 @@
-import { metaDataList } from "@/lib/supabase"
+import { getHostName } from "@/lib/paths"
+import { canonical, metaDataList } from "@/lib/supabase"
 import type { MetadataRoute } from "next"
+import { headers } from "next/headers"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  
+  const canonicalHost = canonical.get(getHostName(await headers()))
+    
 
-  const calendars = metaDataList
+  const calendars = metaDataList.filter(m => m.canonical == canonicalHost)
   const domains = calendars.filter(c => c.order == 1)
   const urls: MetadataRoute.Sitemap = []
 
