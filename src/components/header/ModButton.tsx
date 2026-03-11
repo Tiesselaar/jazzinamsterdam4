@@ -19,16 +19,17 @@ export default function ModButton() {
     : modLink(calendar, source)
 
   const [mod, setMod] = useState(false)
-  useEffect(() => {isModerator().then(setMod).then(()=> console.log(mod))}, [])
-    
+  useEffect(() => { isModerator().then(setMod).then(() => console.log(mod)) }, [])
+
   return mod && (
-      <Link
-        href={newPath}
-        onContextMenu={(e) => { e.preventDefault(); setVisible(false) }}
-        style={{ display: visible ? 'block' : 'none' }}
-        className={styles.modbutton}
-        scroll={false}>
-        {newPath}
-      </Link>
+    <Link
+      href={newPath}
+      onContextMenu={(e) => { e.preventDefault(); setVisible(false) }}
+      style={{ display: visible ? 'block' : 'none' }}
+      className={styles.modbutton}
+      scroll={false}
+      prefetch={false}>
+      {newPath}
+    </Link>
   )
 }

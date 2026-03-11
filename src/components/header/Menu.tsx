@@ -21,6 +21,7 @@ export default function Menu({ host, calendar }: { host: string, calendar: strin
             <Link
               href={'/' + cal.slug}
               style={cal.calendar == calendar ? { 'fontWeight': 'bold' } : {}}
+              prefetch={false}
             >
               {cal.shortTitle.toLowerCase()}
             </Link>
@@ -34,12 +35,14 @@ export default function Menu({ host, calendar }: { host: string, calendar: strin
         <Link
           href={editLink(calendar)}
           style={subpage == 'submit' ? { 'fontWeight': 'bold' } : {}}
+          prefetch={false}
         >
           submit a gig
         </Link>
         <Link
           href={subpage == 'archive' ? root : root + '/archive'}
           style={subpage == 'archive' ? { 'fontWeight': 'bold' } : {}}
+          prefetch={false}
         >
           archive
         </Link>
