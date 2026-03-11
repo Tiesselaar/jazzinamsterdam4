@@ -74,7 +74,7 @@ function formatData(gig: Tables<'gigs'>): string {
 async function sendReviewMail(data: Tables<'gigs'>) {
   if (data.reviewed) return
   const dataString = formatData(data)
-  const editHref = 'https://jazzinamsterdam4.vercel.app' + editLink(data.calendar, data.source, data.id)
+  const editHref = 'https://jazzin.amsterdam' + editLink(data.calendar, data.source, data.id)
   const edit = `<a href=${editHref}>=== EDIT ===</a>`
   const approve = `<a href=${editHref}/approve>=== ACCEPT ===</a>`
   const emailBody = [dataString, edit, approve].join('<br/><br/>')
