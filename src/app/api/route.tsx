@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server'
-import { AgendaQuery, getAgenda, getAgendaNoCache, RequestOptions } from "@/lib/supabase"
+import { AgendaQuery, getAgenda, RequestOptions } from "@/lib/supabase"
 import { Tables } from '@/types/supabase'
 
 const instruction = {
@@ -38,13 +38,13 @@ export async function GET(request: NextRequest) {
   const scope = searchParams.get('scope') || undefined
   const archive = scope === 'all' ? undefined : scope === 'archive'
   const offset = Number(searchParams.get('offset')) || 0
-  const limit = Number(searchParams.get('limit')) || undefined
+  const limit = Number(searchParams.get('limit')) || 600
 
   const calendars = calendarString.split(',').map(c => c.trim())
 
   const options: Partial<RequestOptions> = {
     ...(offset && { offset }),
-    ...(limit && { limit })
+    limit
   }
 
   const sbqueries = calendars.map(calendar => {
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       ...(source !== undefined && { source }),
       ...(archive !== undefined && { archive }),
     }
-    return getAgendaNoCache({ query, options })
+    return getAgenda({ query, options })
   })
 
   const results = (await Promise.all(sbqueries)).flatMap(ad => ad.data)
