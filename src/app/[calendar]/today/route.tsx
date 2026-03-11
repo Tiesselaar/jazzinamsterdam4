@@ -4,7 +4,7 @@ export async function GET(
 ) {
   const params = await props.params;
   const { calendar } = params;
-  const imageURL = `https://jina3.vercel.app/cal/${calendar}/today/post/jpg/${new Date().toISOString()}`;
+  const imageURL = `https://jazzinamsterdam4.vercel.app/${calendar}/today/post/jpg/${new Date().toISOString()}`;
 
   return fetch(imageURL, { cache: 'no-store' })
     .then(response => response.blob())

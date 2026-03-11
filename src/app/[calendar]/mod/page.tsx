@@ -1,4 +1,4 @@
-import { AgendaQuery, getAgenda } from '@/lib/supabase'
+import { AgendaQuery, getAgenda, getAgendaNoCache } from '@/lib/supabase'
 import { ModAgenda } from '@/components/agenda/Variants';
 
 export const revalidate = 60
@@ -13,7 +13,7 @@ export default async function Home(props: {
     archive: false
   }
 
-  const agendaData = await getAgenda({query})
+  const agendaData = await getAgendaNoCache({query})
 
   return <ModAgenda agendaData={agendaData} />
 }

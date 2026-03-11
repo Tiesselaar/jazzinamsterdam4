@@ -17,7 +17,7 @@ export async function GET(
 
   const screenshot_parameters = {
     access_key: process.env.APIFLASH_API_KEY as string,
-    url: `https://jina3.vercel.app/cal/${calendar}/today/${format}/html/${date}`,
+    url: `https://jazzinamsterdam4.vercel.app/${calendar}/today/${format}/html/${date}`,
     quality: "100",
     scale_factor: "2",
     element: "#container",
