@@ -1,46 +1,45 @@
+import { metaDataList } from "@/lib/supabase"
 import type { MetadataRoute } from "next"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const res = await fetch("https://jazzin.amsterdam/api/meta?fields=id,slug")
-    const calendars = await res.json()
 
-    const base = "https://jazzin.amsterdam"
+  const calendars = metaDataList
+  const domains = calendars.filter(c => c.order == 1)
+  const urls: MetadataRoute.Sitemap = []
 
-    // Static homepage
-    const urls: MetadataRoute.Sitemap = [
+  for (const d of domains) {
+    const base = 'https://' + d.canonical
+    urls.push(
+      {
+        url: base,
+        changeFrequency: "daily",
+        priority: 1.0,
+      },
+      {
+        url: base + '/about',
+        changeFrequency: "yearly",
+        priority: 0.3,
+      }
+    )
+  }
+
+  for (const c of calendars) {
+    if (c.order !== 1) {
+      const path = `https://${c.canonical}/${c.slug}`
+      urls.push(
         {
-            url: base,
-            changeFrequency: "daily",
-            priority: 1.0,
+          url: path,
+          changeFrequency: "daily",
+          priority: 1.0,
         },
-    ]
-
-    for (const calendar of calendars) {
-        const slug = calendar.slug
-
-        urls.push(
-            {
-                url: `${base}/${slug}`,
-                changeFrequency: "daily",
-                priority: 1.0,
-            },
-            {
-                url: `${base}/${slug}/submit`,
-                changeFrequency: "yearly",
-                priority: 0.5,
-            },
-            {
-                url: `${base}/${slug}/archive`,
-                changeFrequency: "daily",
-                priority: 0.8,
-            },
-            {
-                url: `${base}/${slug}/about`,
-                changeFrequency: "yearly",
-                priority: 0.8,
-            }
-        )
+        {
+          url: `https://${c.canonical}/${c.slug}/archive`,
+          changeFrequency: "daily",
+          priority: 0.3,
+        },
+      )
     }
+  }
 
-    return urls
+  return urls
 }

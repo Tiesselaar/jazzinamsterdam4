@@ -1,3 +1,4 @@
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers"
 import { metaData } from "./supabase"
 
 export function calendarRoot(calendar: string) {
@@ -26,4 +27,9 @@ export function venueLink(calendar: string, source?: string) {
     return `${root}/venue/${source}`
   else
     return `${root}`
+}
+
+export function getHostName(headers: ReadonlyHeaders) {
+  const fullhost = headers.get("x-forwarded-host") ?? headers.get("host")
+  return new URL(`http://${fullhost}`).hostname
 }
