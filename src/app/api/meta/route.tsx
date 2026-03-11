@@ -1,15 +1,28 @@
 import { type NextRequest } from 'next/server'
-import { createSupabaseClient } from "@/lib/supabase"
+import { supabase } from "@/lib/supabase"
+import { notFound } from 'next/navigation'
+import { Tables } from '@/types/supabase'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const fields = searchParams.get('fields') || "id, title, shortTitle"
-  
+  const legacyFields = searchParams.get('fields') || "id, title, shortTitle"
+  const domain = searchParams.get('domain') || 'jazzin.amsterdam'
 
-  return createSupabaseClient()
+  const fields = (legacyFields
+    .replace(/\bid\b/g, "calendar")
+    .split(',')
+    .map(x => x.trim() as keyof Tables<'metadata'>))
+
+  const { error, data } = await supabase
     .from('metadata')
-    .select(fields)
+    .select(fields.join(','))
     .order('order')
-    .then(({ error, data }) => error ? { error: error.message } : data)
-    .then(data => Response.json(data))
+    .eq('canonical', domain)
+  if (error) notFound()
+
+  const legacy = (entry: any) => {
+    const { calendar: calendar, ...rest } = entry
+    return { id: calendar, ...rest }
+  }
+  return Response.json(data.map(legacy))
 }
