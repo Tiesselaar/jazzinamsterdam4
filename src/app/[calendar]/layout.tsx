@@ -15,13 +15,13 @@ import { headers } from 'next/headers';
 import { canonical, metaData } from '@/lib/supabase'
 import { getHostName } from '@/lib/paths'
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ calendar: string }> }
-): Promise<Metadata> {
-  const { calendar } = await params
-  const metaPage = await metaPages(calendar)
-  return metaPage
-}
+// export async function generateMetadata(
+//   { params }: { params: Promise<{ calendar: string }> }
+// ): Promise<Metadata> {
+//   const { calendar } = await params
+//   const metaPage = await metaPages(calendar)
+//   return metaPage
+// }
 
 export default async function RootLayout({
   children,
