@@ -108,13 +108,13 @@ export const getAgendaNoCache = async (
   const { requestType, offset, limit } = options
 
   let sbquery = supabase
-    .from('view_gigs')
-    .select()
-    .match(query)
-    .range(offset, offset + limit - 1)
-    .order('order_key', { ascending: query.archive !== true })
-    .setHeader('x-request-type', requestType)
-
+  .from('view_gigs')
+  .select()
+  .match(query)
+  .range(offset, offset + limit - 1)
+  .order('order_key', { ascending: query.archive !== true })
+  .setHeader('x-request-type', requestType)
+  
   if (options.lastRow)
     sbquery = query.archive
       ? sbquery.lt('order_key', options.lastRow)
@@ -123,7 +123,6 @@ export const getAgendaNoCache = async (
   const logHook = log('agenda')
   const { data, error } = await sbquery
   log(logHook)
-
   return {
     request: { query, options },
     data: data || [],

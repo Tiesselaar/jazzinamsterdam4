@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server'
-import { AgendaQuery, getAgenda, RequestOptions } from "@/lib/supabase"
+import { AgendaQuery, getAgenda, getAgendaNoCache, RequestOptions } from "@/lib/supabase"
 
 const instruction = {
   usage: "https://jazzin.amsterdam/api?calendar=jazzAmsterdam&page=1&archive=false",
@@ -21,17 +21,17 @@ export async function GET(request: NextRequest) {
   const offset = Number(searchParams.get('offset')) || 0
   const limit = Number(searchParams.get('limit')) || undefined
 
+
   const query: AgendaQuery = {
-    calendar,
-    source,
-    archive
+    ...(calendar !== undefined && { calendar }),
+    ...(source !== undefined && { source }),
+    ...(archive !== undefined && { archive }),
   }
 
   const options: Partial<RequestOptions> = {
-    requestType: 'read-only',
-    offset: offset,
-    limit: limit
+    ...(offset && {offset}),
+    ...(limit && {limit})
   }
-
-  return Response.json(await getAgenda({ query, options }))
+  const data = await getAgendaNoCache({ query: {}, options })
+  return Response.json(data.data)
 }
