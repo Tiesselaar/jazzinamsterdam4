@@ -15,7 +15,7 @@ export default async function Header(
     <>
       <Link href={venueLink(calendar)} prefetch={false} >
         <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-          <Image src={jinaLogo} height={28} width={28} alt='logo' priority />
+          <Image src={jinaLogo} height={28} width={28} alt='' priority />
           {
             meta?.title
           }
