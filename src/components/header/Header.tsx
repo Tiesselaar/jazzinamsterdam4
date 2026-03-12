@@ -12,13 +12,15 @@ export default async function Header(
 ) {
   const meta = metaData.get(calendar)
   return (
-    <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+    <>
       <Link href={venueLink(calendar)} prefetch={false} >
-        <Image src={jinaLogo} height={28} width={28} alt='logo' priority />
-        {
-          meta?.title
-        }
+        <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <Image src={jinaLogo} height={28} width={28} alt='logo' priority />
+          {
+            meta?.title
+          }
+        </h1>
       </Link>
-    </h1>
+    </>
   )
 }
