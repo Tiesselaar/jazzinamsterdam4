@@ -8,17 +8,20 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default async function Header(
-    { calendar }: { calendar: string }
+  { calendar }: { calendar: string }
 ) {
-    const meta = metaData.get(calendar)
-    return <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-        <Image src={jinaLogo} height={28} width={28} alt='logo' priority/>
-        <Link href={venueLink(calendar)} prefetch={false} >
-            {
-                meta?.title.replace("Classical music in Amsterdam", "Classical in Amsterdam") ||
-                (calendar == 'jazzFrankfurt' ? "Jazz in Frankfurt" : "Jazz in Amsterdam")
-            }
-        </Link>
-    </h1>
+  const meta = metaData.get(calendar)
+  return (
+    <header>
+      <Link href={venueLink(calendar)} prefetch={false} >
+        <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <Image src={jinaLogo} height={28} width={28} alt='logo' priority />
+          {
+            meta?.title
+          }
+        </h1>
+      </Link>
+    </header>
+  )
 }
 
