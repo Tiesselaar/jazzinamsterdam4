@@ -31,7 +31,7 @@ export default async function RootLayout({
   params: Promise<{ calendar: string }>
 }) {
 
-  const calendar = (await params).calendar  
+  const calendar = (await params).calendar
   const host = getHostName(await headers())
 
   // if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
@@ -40,11 +40,15 @@ export default async function RootLayout({
     <>
       <html lang="en">
         <body>
-          <ModButton />
-          <TopMenu />
-          <Header calendar={calendar} />
-          <Menu host={host} calendar={calendar} />
-          {children}
+          <header>
+            <ModButton />
+            <TopMenu />
+            <Header calendar={calendar} />
+            <Menu host={host} calendar={calendar} />
+          </header>
+          <main>
+            {children}
+          </main>
           <Analytics />
           <SpeedInsights />
         </body>
