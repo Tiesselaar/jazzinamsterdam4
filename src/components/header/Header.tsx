@@ -17,7 +17,7 @@ export default async function Header(
         <h1 style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
           <Image src={jinaLogo} height={28} width={28} alt='' priority />
           {
-            meta?.title
+            meta?.title.replace('Classical music in Amsterdam', 'Classical in Amsterdam')
           }
         </h1>
       </Link>
