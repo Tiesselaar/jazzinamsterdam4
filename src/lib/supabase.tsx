@@ -139,4 +139,4 @@ export const getAgendaNoCache = async (
   }
 }
 
-export const getAgenda = unstable_cache(getAgendaNoCache, [], { revalidate: 60 })
+export const getAgenda = unstable_cache(getAgendaNoCache, ['agenda'], { revalidate: 60 })
