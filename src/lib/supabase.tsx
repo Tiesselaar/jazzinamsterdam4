@@ -123,6 +123,8 @@ export const getAgendaNoCache = async (
   const logHook = log('agenda')
   const { data, error } = await sbquery
   log(logHook)
+  console.log('error', error)
+  console.log('length', data.length)
   return {
     request: { query, options },
     data: data || [],
