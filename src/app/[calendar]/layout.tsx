@@ -34,7 +34,7 @@ export default async function RootLayout({
   const calendar = (await params).calendar
   const host = getHostName(await headers())
 
-  // if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
+  if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
 
   return (
     <>
