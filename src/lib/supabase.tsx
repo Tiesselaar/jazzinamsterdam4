@@ -123,6 +123,11 @@ export const getAgendaNoCache = async (
   const logHook = log('agenda')
   const { data, error } = await sbquery
   log(logHook)
+  console.log('length', data?.length)
+  if (error) {
+    console.error('Supabase error', error)
+    throw error
+  }
   return {
     request: { query, options },
     data: data || [],
@@ -139,4 +144,4 @@ export const getAgendaNoCache = async (
   }
 }
 
-export const getAgenda = unstable_cache(getAgendaNoCache, [], { revalidate: 60 })
+export const getAgenda = unstable_cache(getAgendaNoCache, ['agenda'], { revalidate: 60 })

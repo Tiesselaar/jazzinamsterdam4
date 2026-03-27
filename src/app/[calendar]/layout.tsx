@@ -10,9 +10,9 @@ import ModButton from '@/components/header/ModButton'
 import metaPages from '@/components/header/metadata'
 import TopMenu from '@/components/header/TopMenu';
 import Header from '@/components/header/Header';
-// import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-// import { canonical, metaData } from '@/lib/supabase'
+import { canonical, metaData } from '@/lib/supabase'
 import { getHostName } from '@/lib/paths'
 
 export async function generateMetadata(
@@ -34,7 +34,7 @@ export default async function RootLayout({
   const calendar = (await params).calendar
   const host = getHostName(await headers())
 
-  // if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
+  if (metaData.get(calendar)?.canonical !== canonical.get(host)) notFound()
 
   return (
     <>

@@ -22,7 +22,7 @@ const Price = ({ gig }: { gig: Tables<'view_gigs'> }) =>
   </>
 
 export function MainGigRow({ gig }: { gig: Tables<'view_gigs'> }) {
-  const downloadICS = () => window.location.href = `/ics/${gig.id}`
+  const downloadICS = () => window.location.href = `/ical/${gig.id}`
   return (
     <tr className={rowStyles.default} itemScope itemType="https://schema.org/Event">
       <td className={rowStyles.time}>
