@@ -32,10 +32,28 @@ export type AgendaProps = {
   variant?: Variants
 }
 
-function groupGigs(rows: Gig[]) {
-  const days = Object.groupBy(rows, gig => gig.display_date)
+// function groupGigs(rows: Gig[]) {
+//   const days = Object.groupBy(rows, gig => gig.display_date)
+//   return Object.entries(days) as DayGroups
+// }
+
+
+function groupGigs(rows: Gig[]): DayGroups {
+  const days = rows.reduce<Record<string, Gig[]>>((groups, gig) => {
+    const date = gig.display_date
+
+    if (!groups[date]) {
+      groups[date] = []
+    }
+
+    groups[date].push(gig)
+
+    return groups
+  }, {})
+
   return Object.entries(days) as DayGroups
 }
+
 
 export default function Agenda({
   agendaData,
