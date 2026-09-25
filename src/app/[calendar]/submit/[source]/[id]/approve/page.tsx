@@ -20,9 +20,10 @@ export default function Approve() {
         .from('gigs')
         .update({ reviewed: true })
         .match({ calendar, source, id })
+      router.refresh()
     }
     approve()
-    router.refresh()
+    
   }, [])
 
   return null
