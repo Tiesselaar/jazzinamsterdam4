@@ -15,15 +15,19 @@ export default function Approve() {
 
   useEffect(() => {
     async function approve() {
-      await login()
-      await supabase
-        .from('gigs')
-        .update({ reviewed: true })
-        .match({ calendar, source, id })
+      const userId = await login()
+      console.log(userId)
+      console.log(calendar, source, id)
+      console.log(
+        await supabase
+          .from('gigs')
+          .update({ reviewed: true })
+          .match({ calendar, source, id })
+          .setHeader('x-request-type', 'authorized')
+      )
       router.refresh()
     }
     approve()
-    
   }, [])
 
   return null

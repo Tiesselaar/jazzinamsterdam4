@@ -121,7 +121,7 @@ export default function SubmitForm(
   useEffect(() => {
     if (id) setForm(initialFormData)
     setButtonDisabled(false)
-  }, [id])
+  }, [id, submissions])
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
